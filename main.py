@@ -2,6 +2,10 @@ from dotenv import dotenv_values
 import requests
 import pandas as pd
 import streamlit as st
+import seaborn as sns
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+
 
 st.markdown("""
 # My App
@@ -18,3 +22,14 @@ if response.status_code == 200:
 else:
     st.write("API call failed")
 
+
+fig, ax = plt.subplots(figsize = (12,6))
+sns.lineplot(data=data, x='datetime', y='temp', ax=ax)
+
+myFmt = mdates.DateFormatter("%d-%m")
+ax.xaxis.set_major_formatter(myFmt)
+
+plt.grid(True, alpha=1)
+fig.autofmt_xdate(rotation=45)
+
+st.pyplot(fig)
