@@ -14,9 +14,9 @@ api_url = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/ser
 response = requests.get(api_url.format(YOUR_API_KEY="API_KEY"))
 if response.status_code == 200:
     weather_data = response.json()
-    print(weather_data)
+    st.write(weather_data)
     data = pd.json_normalize(weather_data["days"])
 else:
-    print("API call failed")
+    st.write("API call failed")
 
-st.write(data)
+st.write(weather_data)
