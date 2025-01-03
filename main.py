@@ -19,4 +19,4 @@ if response.status_code == 200:
 else:
     print("API call failed")
 
-print(data)
+st.write(data)
