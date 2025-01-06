@@ -100,7 +100,7 @@ if st.session_state.clicked and cityWeather and type(cityWeather) == dict:
     fig.autofmt_xdate(rotation=45)
     st.pyplot(fig)
 
-    st.line_chart(data=data.groupby('conditions'))
+    #st.line_chart(data=data.groupby('conditions'))
 
 
 elif st.session_state.clicked and selectedCity is not None:
