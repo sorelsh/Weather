@@ -1,6 +1,6 @@
 # Weather Forecast
 
-visual application for Weather Forecast.<p>
+visual streamlit application for Weather Forecast.<p>
 brifly about the app:<br>
 The countries are loaded from [API](https://documenter.getpostman.com/view/1134062/T1LJjU52). After selecting a country, the capital city is loaded from API. 
 <br>you can enter another city for the selected country. If the entered city is valid (weather forecast was retrieved), 
