@@ -4,7 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import datetime as dt
-from datetime import timedelta, timezone
+from datetime import timedelta, timezone, datetime
 
 from numpy.ma.extras import column_stack
 from numpy.matlib import empty
@@ -59,7 +59,6 @@ with main_container:
             st.session_state.clicked = True
 
 
-
 if st.session_state.clicked and cityWeather and type(cityWeather) == dict:
     if selectedCity not in cities:
         db.insert(dict(country=selectedCountry, city=selectedCity))
@@ -71,30 +70,38 @@ if st.session_state.clicked and cityWeather and type(cityWeather) == dict:
     data['tempmin_c'] = data.apply(lambda x: Utils.fahrenheit_to_celsius(x.tempmin), axis=1)
 
 
-    daily_container = st.container(border=True)
-    with daily_container:
-        today = data[data.datetime == dt.datetime.now().strftime("%Y-%m-%d")]
-        st.write(today)
-        st.markdown("""<h3> {city}, {state} </h3>""".format(city=selectedCity, state=selectedCountry), unsafe_allow_html=True)
-        st.markdown("""<h4> {date_time} </h4>""".format(date_time=(dt.datetime.now(timezone.utc) +  timedelta(hours=cityWeather['tzoffset'])).strftime("%d/%m/%Y %H:%M:%S")), unsafe_allow_html=True)
-        st.markdown("**{description}**".format(description=today['description'][0]))
-        st.image("./images/{img_name}.png".format(img_name=today['icon'][0]))
-        st.markdown("#  Temp: {val}".format(val=today['temp_c'][0]))
-        st.markdown("* **sunrise: {val}**".format(val=today['sunrise'][0]))
-        st.markdown("* **sunset: {val}**".format(val=today['sunset'][0]))
-        st.markdown("* **humidity: {val}**".format(val=today['humidity'][0]))
-        st.markdown("* **Max. Temp: {val}**".format(val=today['tempmax_c'][0]))
-        st.markdown("* **Min. Temp: {val}**".format(val=today['tempmin_c'][0]))
+    daily_container = st.expander("view today forecast",expanded=True)
+    Utils.today_weather(daily_container, data, cityWeather, selectedCity, selectedCountry)
+
+    weekly_container = st.expander("view weekly forecast", expanded=False)
+    day1_container = weekly_container.container(border=True)
+    day2_container = weekly_container.container(border=True)
+    day3_container = weekly_container.container(border=True)
+    day4_container = weekly_container.container(border=True)
+    day5_container = weekly_container.container(border=True)
+    day6_container = weekly_container.container(border=True)
+    day7_container = weekly_container.container(border=True)
+
+
+    with weekly_container:
+        Utils.daily_weather(day1_container, data, 0)
+        Utils.daily_weather(day2_container, data, 1)
+        Utils.daily_weather(day3_container, data, 2)
+        Utils.daily_weather(day4_container, data, 3)
+        Utils.daily_weather(day5_container, data, 4)
+        Utils.daily_weather(day6_container, data, 5)
+        Utils.daily_weather(day7_container, data, 6)
 
     fig, ax = plt.subplots(figsize = (12,6))
     sns.lineplot(data=data, x='datetime', y='temp_c', ax=ax)
-
     myFmt = mdates.DateFormatter("%d/%m/%y")
     # ax.xaxis.set_major_formatter(myFmt)
-
     plt.grid(True, alpha=1)
     fig.autofmt_xdate(rotation=45)
-
     st.pyplot(fig)
+
+    st.line_chart(data=data.groupby('conditions'))
+
+
 elif st.session_state.clicked and selectedCity is not None:
     st.markdown("**:red[No information found for: {city_name}, check if the city name is correct]**".format(city_name=selectedCity))
