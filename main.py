@@ -21,7 +21,6 @@ st.session_state.country_selected = False
 st.session_state.clicked = False
 
 countries_data = Api.get_countries()
-
 countries_dic = {}
 cities = []
 main_container = st.container()
@@ -65,7 +64,7 @@ if st.session_state.clicked and cityWeather and type(cityWeather) == dict:
 
     data = pd.json_normalize(cityWeather["days"])
     #convert fahrenheit_to_celsius
-    data['temp_c'] = data.apply(lambda x: round(((x.temp - 32) * 0.5556), 1), axis=1)
+    data['temp_c'] = data.apply(lambda x: int(((x.temp - 32) * 0.5556)), axis=1)
     data['tempmax_c'] = data.apply(lambda x: Utils.fahrenheit_to_celsius(x.tempmax), axis=1)
     data['tempmin_c'] = data.apply(lambda x: Utils.fahrenheit_to_celsius(x.tempmin), axis=1)
 
@@ -82,7 +81,6 @@ if st.session_state.clicked and cityWeather and type(cityWeather) == dict:
     day6_container = weekly_container.container(border=True)
     day7_container = weekly_container.container(border=True)
 
-
     with weekly_container:
         Utils.daily_weather(day1_container, data, 0)
         Utils.daily_weather(day2_container, data, 1)
@@ -92,16 +90,22 @@ if st.session_state.clicked and cityWeather and type(cityWeather) == dict:
         Utils.daily_weather(day6_container, data, 5)
         Utils.daily_weather(day7_container, data, 6)
 
-    fig, ax = plt.subplots(figsize = (12,6))
-    sns.lineplot(data=data, x='datetime', y='temp_c', ax=ax)
-    myFmt = mdates.DateFormatter("%d/%m/%y")
-    # ax.xaxis.set_major_formatter(myFmt)
-    plt.grid(True, alpha=1)
-    fig.autofmt_xdate(rotation=45)
-    st.pyplot(fig)
+    graphs_container = st.expander("general graphs for next 15 days",expanded=false)
+    with graphs_container:
+        fig1, ax1 = plt.subplots(figsize = (12,6))
+        sns.barplot(data=data, x='datetime', y='temp_c', ax=ax1)
+        myFmt = mdates.DateFormatter("%d/%m/%y")
+        plt.grid(True, alpha=1)
+        fig1.autofmt_xdate(rotation=45)
+        st.pyplot(fig1)
 
-    #st.line_chart(data=data.groupby('conditions'))
+        fig2, ax3 = plt.subplots(figsize = (12,6))
+        sns.histplot(data=data, x='conditions', hue='conditions', ax=ax3)
+        st.pyplot(fig2)
 
+        fig3, ax2 = plt.subplots(figsize = (12,6))
+        sns.scatterplot(data=data, x='tempmin', y='tempmax', hue='conditions', ax=ax2).set(title='Minimum vs Maximum Temperature', xlabel='Minimum Temperature', ylabel='Maximum Temperature')
+        st.pyplot(fig3)
 
 elif st.session_state.clicked and selectedCity is not None:
     st.markdown("**:red[No information found for: {city_name}, check if the city name is correct]**".format(city_name=selectedCity))

@@ -2,7 +2,7 @@ import datetime as dt
 from datetime import timedelta, timezone, datetime
 
 def fahrenheit_to_celsius(fahrenheit:str):
-    return round((float(fahrenheit) - 32) * 5 / 9,1)
+    return int((float(fahrenheit) - 32) * 5 / 9)
 
 def today_weather(daily_container, data, cityWeather, selectedCity, selectedCountry):
     with daily_container:
@@ -24,12 +24,13 @@ def today_weather(daily_container, data, cityWeather, selectedCity, selectedCoun
                 "%d/%m/%Y %H:%M:%S")), unsafe_allow_html=True)
         col3[0].markdown("**{description}**".format(description=today['description'][0]))
         col4[0].image("./images/{img_name}.png".format(img_name=today['icon'][0]))
-        col4[1].markdown("#  Temp: {val}".format(val=today['temp_c'][0]))
+        col4[1].markdown("#  Temp: {val}\u2103".format(val=today['temp_c'][0]))
         col5[0].markdown("* **sunrise: {val}**".format(val=":".join(today['sunrise'][0].split(":")[:2])))
         col5[1].markdown("* **sunset: {val}**".format(val=":".join(today['sunset'][0].split(":")[:2])))
         col6[0].markdown("* **humidity: {val}**".format(val=today['humidity'][0]))
-        col7[0].markdown("* **Max. Temp: {val}**".format(val=today['tempmax_c'][0]))
-        col7[1].markdown("* **Min. Temp: {val}**".format(val=today['tempmin_c'][0]))
+        col6[1].markdown("* **uv index: {val}**".format(val=int(today['uvindex'][0])))
+        col7[0].markdown("* **Max. Temp: {val}\u2103**".format(val=today['tempmax_c'][0]))
+        col7[1].markdown("* **Min. Temp: {val}\u2103**".format(val=today['tempmin_c'][0]))
 
 def daily_weather(daily_container, data, day_num):
     global colsW, colsW1
@@ -41,5 +42,5 @@ def daily_weather(daily_container, data, day_num):
         colsW[1].markdown("**{conditions}**".format(conditions=data.iloc[day_num]['conditions']))
         colsW1[0].image("./images/{img_name}.png".format(img_name=data.iloc[day_num]['icon']))
         colsW1[1].markdown("**humidity: {val}**".format(val=data.iloc[day_num]['humidity']))
-        colsW[2].markdown("**Max. Temp: {val}**".format(val=data.iloc[day_num]['tempmax_c']))
-        colsW1[2].markdown("**Min. Temp: {val}**".format(val=data.iloc[day_num]['tempmin_c']))
+        colsW[2].markdown("**Max. Temp: {val}\u2103**".format(val=data.iloc[day_num]['tempmax_c']))
+        colsW1[2].markdown("**Min. Temp: {val}\u2103**".format(val=data.iloc[day_num]['tempmin_c']))
