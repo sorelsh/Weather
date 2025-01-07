@@ -15,6 +15,15 @@ The app features three views:
 <li>General graphs on next 15 days weather.</li>
 </ul>
 
+## Usage
+to run the project: 
+```bash
+streamlit run main.py
+```
+
+[my App on streamlit](https://weather-jsbjg4hew5nzw4op7pjvby.streamlit.app/)
+
+
 ## Installation
 
 Use <b>"poetry install"</b> to install Weather Forecast dependencies.
@@ -22,10 +31,6 @@ Use <b>"poetry install"</b> to install Weather Forecast dependencies.
 ```bash
 poetry install
 ```
-
-## Usage
-[my App on streamlit](https://weather-jsbjg4hew5nzw4op7pjvby.streamlit.app/)
-
 
 ## Contributing
 

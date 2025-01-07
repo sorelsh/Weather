@@ -3,16 +3,10 @@ import streamlit as st
 import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-import datetime as dt
-from datetime import timedelta, timezone, datetime
-
-from numpy.ma.extras import column_stack
-from numpy.matlib import empty
-
 import Api
 import DbHelper
 import Utils
-from Api import get_weather
+
 
 st.markdown("""
 # Weather Forecast App
