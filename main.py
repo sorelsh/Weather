@@ -90,7 +90,7 @@ if st.session_state.clicked and cityWeather and type(cityWeather) == dict:
         Utils.daily_weather(day6_container, data, 5)
         Utils.daily_weather(day7_container, data, 6)
 
-    graphs_container = st.expander("general graphs for next 15 days",expanded=false)
+    graphs_container = st.expander("general graphs for next 15 days",expanded=False)
     with graphs_container:
         fig1, ax1 = plt.subplots(figsize = (12,6))
         sns.barplot(data=data, x='datetime', y='temp_c', ax=ax1)

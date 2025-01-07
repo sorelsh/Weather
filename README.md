@@ -1,17 +1,18 @@
 # Weather Forecast
 
 visual streamlit application for Weather Forecast.<p>
-brifly about the app:<br>
-The countries are loaded from [API](https://documenter.getpostman.com/view/1134062/T1LJjU52). After selecting a country, the capital city is loaded from API. 
-<br>you can enter another city for the selected country. If the entered city is valid (weather forecast was retrieved), 
-it will be inserted to the local DB and will be added to the list of cities the next time you select that country.
-<br>By clicking on the "Get Weather Forecast for..." button,  weather data for the selected city will be retrieved from [API](https://www.visualcrossing.com/weather-api).
-<br>weather icons was taken from the weather API [Repo](https://github.com/visualcrossing/WeatherIcons).
-<p>There are 3 views:
+<b>About the App:</b>
+<br>The app loads a list of countries from an [API](https://documenter.getpostman.com/view/1134062/T1LJjU52). After selecting a country, the capital city is fetched from the same API.
+You can also enter a different city for the selected country. If the city is valid (i.e., its weather forecast is successfully retrieved), it will be saved to a local database and included in the city list the next time you select that country.
+
+By clicking the "Get Weather Forecast for..." button, weather data for the chosen city is retrieved from the Visual Crossing Weather [API](https://www.visualcrossing.com/weather-api). 
+<br>Weather icons are sourced from the API [GitHub repository](https://github.com/visualcrossing/WeatherIcons).
+
+The app features three views:
 <ul>
 <li>Extended weather data for the current day.</li>
 <li>General weather data for the coming week.</li>
-<li>Different graphs about the weather.</li>
+<li>General graphs on next 15 days weather.</li>
 </ul>
 
 ## Installation
