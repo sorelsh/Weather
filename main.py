@@ -69,6 +69,7 @@ if st.session_state.clicked and cityWeather and type(cityWeather) == dict:
     data['tempmin_c'] = data.apply(lambda x: Utils.fahrenheit_to_celsius(x.tempmin), axis=1)
 
 
+
     daily_container = st.expander("view today forecast",expanded=True)
     Utils.today_weather(daily_container, data, cityWeather, selectedCity, selectedCountry)
 
@@ -93,7 +94,7 @@ if st.session_state.clicked and cityWeather and type(cityWeather) == dict:
     graphs_container = st.expander("general graphs for next 15 days",expanded=False)
     with graphs_container:
         fig1, ax1 = plt.subplots(figsize = (12,6))
-        sns.barplot(data=data, x='datetime', y='temp_c', ax=ax1)
+        sns.barplot(data=data, x='datetime', y=data[['tempmax_c','tempmin_c']].mean(axis=1), ax=ax1).set(xlabel='date', ylabel='mean Temperature \u2103')
         myFmt = mdates.DateFormatter("%d/%m/%y")
         plt.grid(True, alpha=1)
         fig1.autofmt_xdate(rotation=45)
@@ -104,7 +105,7 @@ if st.session_state.clicked and cityWeather and type(cityWeather) == dict:
         st.pyplot(fig2)
 
         fig3, ax2 = plt.subplots(figsize = (12,6))
-        sns.scatterplot(data=data, x='tempmin', y='tempmax', hue='conditions', ax=ax2).set(title='Minimum vs Maximum Temperature', xlabel='Minimum Temperature', ylabel='Maximum Temperature')
+        sns.scatterplot(data=data, x='tempmin_c', y='tempmax_c', hue='conditions', ax=ax2).set(title='Minimum vs Maximum Temperature \u2103', xlabel='Minimum Temperature \u2103', ylabel='Maximum Temperature \u2103')
         st.pyplot(fig3)
 
 elif st.session_state.clicked and selectedCity is not None:
