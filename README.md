@@ -21,7 +21,7 @@ to run the project:
 streamlit run main.py
 ```
 
-[my App on streamlit](https://weather-jsbjg4hew5nzw4op7pjvby.streamlit.app/)
+[my App on streamlit](https://weather-foqetxesl27kohmgauhd3f.streamlit.app/)
 
 
 ## Installation
