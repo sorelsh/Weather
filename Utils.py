@@ -15,7 +15,7 @@ def today_weather(daily_container, data, cityWeather, selectedCity, selectedCoun
         col6 = daily_container.columns(2)
         col7 = daily_container.columns(2)
 
-        today = data[data.datetime == dt.datetime.now().strftime("%Y-%m-%d")]
+        today = data.iloc[0].to_frame().T
         cols[0].write(today)
         cols[0].markdown("""<h3> {city}, {state} </h3>""".format(city=selectedCity, state=selectedCountry),
                     unsafe_allow_html=True)
